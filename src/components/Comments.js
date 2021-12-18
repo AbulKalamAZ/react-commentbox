@@ -57,7 +57,7 @@ const CommentorContent = styled.div`
 `;
 const CommentorName = styled.h4`
   position: relative;
-  bottom: 4px;
+  bottom: 0px;
 `;
 const CommentorComment = styled.p`
   font-size: 18px;
