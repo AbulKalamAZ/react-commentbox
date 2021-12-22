@@ -1,12 +1,22 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Container from "./components/Container";
+import CommentContainer from "./components/Container";
+import Home from "./components/Home";
 
 function App() {
   return (
-    <div className='app'>
-      <Container />
-    </div>
+    <Router>
+      <div className='app'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route
+            path='/commentbox/:commentBoxID'
+            element={<CommentContainer />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

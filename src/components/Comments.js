@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
+import app from "../firebase/config";
+
 import userAvatar from "../assets/user.png";
 
+console.log(app);
 function Comments({ comments }) {
   return (
     <CommentsWrapper>
       {comments.map(({ id, name, comment }) => {
         return (
-          <Comment key={id}>
+          <Comment key={`${id} + ${Math.random()}`}>
             <CommentorAvatar />
 
             <CommentorContent>
