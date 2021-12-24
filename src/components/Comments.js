@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import app from "../firebase/config";
-
 import userAvatar from "../assets/user.png";
 
-console.log(app);
 function Comments({ comments }) {
   return (
     <CommentsWrapper>
-      {comments.map(({ id, name, comment }) => {
+      {comments.map(({ id, name, comment, IFrameValue }) => {
         return (
           <Comment key={`${id} + ${Math.random()}`}>
             <CommentorAvatar />
@@ -17,6 +14,13 @@ function Comments({ comments }) {
             <CommentorContent>
               <CommentorName>{name}</CommentorName>
               <CommentorComment>{comment}</CommentorComment>
+
+              {IFrameValue === "" ? null : (
+                <IFrameContainer
+                  title='comment-media'
+                  src={IFrameValue}
+                ></IFrameContainer>
+              )}
             </CommentorContent>
           </Comment>
         );
@@ -55,6 +59,7 @@ const CommentorAvatar = styled.div`
 `;
 
 const CommentorContent = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -63,7 +68,15 @@ const CommentorName = styled.h4`
   bottom: 0px;
 `;
 const CommentorComment = styled.p`
+  margin-bottom: 12px;
   font-size: 18px;
   line-height: 1.2;
   font-weight: 400;
+`;
+
+const IFrameContainer = styled.iframe`
+  width: 100%;
+  height: 300px;
+  border: none;
+  outline: 0;
 `;

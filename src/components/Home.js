@@ -1,18 +1,48 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { customAlphabet } from "nanoid";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import utilities from "../firebase/utilities";
+
+import loadingImage from "../assets/spinner.gif";
 
 function Home() {
   const commentBoxID = customAlphabet(
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
     20
   )();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // History data of the page
+  const history = useNavigate();
+
+  // This function will take user to the next page once the doc is created
+  const pushToTheNextPage = useCallback(
+    () => history(`/commentbox/${commentBoxID}`),
+    [history, commentBoxID]
+  );
+
+  //This function will handle routing from top
+  const handleCommentBoxRoute = () => {
+    setIsLoading(true);
+    utilities.createDocInCollection(commentBoxID).then((id) => {
+      // Route to the /commentbox/id page
+      pushToTheNextPage();
+      setIsLoading(false);
+    });
+  };
+
   return (
     <StyledContainer>
-      <Link to={`/commentbox/${commentBoxID}`}>
-        <StyledNavigationButton>Create Commentbox</StyledNavigationButton>
-      </Link>
+      {isLoading ? (
+        <LoadingImage src={loadingImage} alt='loading icon' />
+      ) : (
+        <StyledNavigationButton onClick={handleCommentBoxRoute}>
+          Create Commentbox
+        </StyledNavigationButton>
+      )}
     </StyledContainer>
   );
 }
@@ -31,6 +61,8 @@ const StyledContainer = styled.div`
   background-color: #fff;
   border-radius: 8px;
 `;
+
+const LoadingImage = styled.img``;
 
 const StyledNavigationButton = styled.button`
   padding: 12px 24px;
