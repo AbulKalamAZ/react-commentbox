@@ -19,7 +19,7 @@ function Comments({ comments }) {
                 <IFrameContainer
                   title='comment-media'
                   src={IFrameValue}
-                  sandbox='allow-forms allow-scripts'
+                  // sandbox='allow-forms allow-scripts'
                 ></IFrameContainer>
               )}
             </CommentorContent>

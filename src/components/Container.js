@@ -31,13 +31,21 @@ function Container() {
     });
   }, [pageID]);
   return (
-    <StyledContainer>
-      <CommentInput
-        handlePushComment={handlePushComment}
-        commentProcessing={commentProcessing}
-      />
-      <CommentsContainer comments={comments} />
-    </StyledContainer>
+    <>
+      <LinkToNingSpruz href='http://ning.spruz.com' target='_blank'>
+        <NingSpruzCard>
+          <h1>Ning Spruz</h1>
+          <p>Your social network for all</p>
+        </NingSpruzCard>
+      </LinkToNingSpruz>
+      <StyledContainer>
+        <CommentInput
+          handlePushComment={handlePushComment}
+          commentProcessing={commentProcessing}
+        />
+        <CommentsContainer comments={comments} />
+      </StyledContainer>
+    </>
   );
 }
 
@@ -52,4 +60,17 @@ const StyledContainer = styled.div`
   margin: 36px auto;
   background-color: #fff;
   border-radius: 8px;
+`;
+
+const LinkToNingSpruz = styled.a``;
+
+const NingSpruzCard = styled.div`
+  width: 250px;
+  padding: 12px;
+  position: fixed;
+  left: 20px;
+  background-color: #9d5c0d;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
 `;
