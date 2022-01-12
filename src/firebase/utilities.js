@@ -1,10 +1,12 @@
 import app from "./config";
 import {
   getFirestore,
+  collection,
   doc,
   setDoc,
   updateDoc,
   getDoc,
+  getDocs,
   arrayUnion,
 } from "firebase/firestore/lite";
 
@@ -13,9 +15,12 @@ const db = getFirestore(app);
 // Create doc in commentboxes collection
 
 const createDocInCollection = async (id) => {
+  const docs = await getDocs(collection(db, "commentboxes"));
+
   // docData with the id first
   const docData = {
     id: id,
+    serial: docs._docs.length,
     comments: [],
   };
 

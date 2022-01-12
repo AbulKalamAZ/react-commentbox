@@ -13,6 +13,8 @@ function CommentInput({ handlePushComment, commentProcessing }) {
   const [comment, setComment] = useState("");
   const [allowIFrame, setAllowIFrame] = useState(false);
   const [IFrameValue, setIFrameValue] = useState("");
+  const [IFrameWidthValue, setIFrameWidthValue] = useState("");
+  const [IFrameHeightValue, setIFrameHeightValue] = useState("");
 
   const commentID = customAlphabet(
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -31,10 +33,25 @@ function CommentInput({ handlePushComment, commentProcessing }) {
     setIFrameValue(e.target.value);
   };
 
+  const handleIFrameWidthChange = (e) => {
+    setIFrameWidthValue(parseFloat(e.target.value));
+  };
+
+  const handleIFrameHeightChange = (e) => {
+    setIFrameHeightValue(parseFloat(e.target.value));
+  };
+
   const handleSubmit = (e) => {
     // Block browsers default behaviour
 
     e.preventDefault();
+    console.log(
+      name,
+      comment,
+      IFrameValue,
+      IFrameWidthValue,
+      IFrameHeightValue
+    );
 
     // Run this block when comment isn't empty
 
@@ -46,15 +63,22 @@ function CommentInput({ handlePushComment, commentProcessing }) {
               name: "Anonymous",
               comment: comment,
               IFrameValue: IFrameValue,
+              IFrameWidthValue: IFrameWidthValue,
+              IFrameHeightValue: IFrameHeightValue,
             },
             docID
           )
-        : handlePushComment({ name, comment, IFrameValue }, docID);
+        : handlePushComment(
+            { name, comment, IFrameValue, IFrameWidthValue, IFrameHeightValue },
+            docID
+          );
 
       // Clearing the input state
       setName("");
       setComment("");
       setIFrameValue("");
+      setIFrameWidthValue("");
+      setIFrameHeightValue("");
     }
   };
 
@@ -110,6 +134,26 @@ function CommentInput({ handlePushComment, commentProcessing }) {
               value={IFrameValue}
               onChange={handleIFrameChange}
             />
+            <IframeOptionWrapper>
+              <IframeOption>
+                <StyledLabel marginBottom='8px'>iframe's width</StyledLabel>
+                <StyledInput
+                  type='text'
+                  name='iframeWidth'
+                  value={IFrameWidthValue}
+                  onChange={handleIFrameWidthChange}
+                />
+              </IframeOption>
+              <IframeOption>
+                <StyledLabel marginBottom='8px'>iframe's height</StyledLabel>
+                <StyledInput
+                  type='text'
+                  name='iframeHeight'
+                  value={IFrameHeightValue}
+                  onChange={handleIFrameHeightChange}
+                />
+              </IframeOption>
+            </IframeOptionWrapper>
           </IFrameInput>
         ) : null}
         <CommentButton>
@@ -209,6 +253,17 @@ const IFrameInput = styled.div`
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+`;
+
+const IframeOptionWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 24px;
+`;
+
+const IframeOption = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 const CommentButton = styled.button`
   position: relative;

@@ -6,26 +6,38 @@ import userAvatar from "../assets/user.png";
 function Comments({ comments }) {
   return (
     <CommentsWrapper>
-      {comments.map(({ id, name, comment, IFrameValue }) => {
-        return (
-          <Comment key={`${id} + ${Math.random()}`}>
-            <CommentorAvatar />
+      {comments.map(
+        ({
+          id,
+          name,
+          comment,
+          IFrameValue,
+          IFrameWidthValue,
+          IFrameHeightValue,
+        }) => {
+          console.log(IFrameWidthValue, IFrameHeightValue);
+          return (
+            <Comment key={`${id} + ${Math.random()}`}>
+              <CommentorAvatar />
 
-            <CommentorContent>
-              <CommentorName>{name}</CommentorName>
-              <CommentorComment>{comment}</CommentorComment>
+              <CommentorContent>
+                <CommentorName>{name}</CommentorName>
+                <CommentorComment>{comment}</CommentorComment>
 
-              {IFrameValue === "" ? null : (
-                <IFrameContainer
-                  title='comment-media'
-                  src={IFrameValue}
-                  // sandbox='allow-forms allow-scripts'
-                ></IFrameContainer>
-              )}
-            </CommentorContent>
-          </Comment>
-        );
-      })}
+                {IFrameValue === "" ? null : (
+                  <IFrameContainer
+                    IFrameWidthValue={IFrameWidthValue}
+                    IFrameHeightValue={IFrameHeightValue}
+                    title='comment-media'
+                    src={IFrameValue}
+                    // sandbox='allow-forms allow-scripts'
+                  ></IFrameContainer>
+                )}
+              </CommentorContent>
+            </Comment>
+          );
+        }
+      )}
     </CommentsWrapper>
   );
 }
@@ -76,8 +88,21 @@ const CommentorComment = styled.p`
 `;
 
 const IFrameContainer = styled.iframe`
-  width: 100%;
-  height: 300px;
+  /* width: 100%;
+  height: 300px; */
+  width: ${({ IFrameWidthValue }) =>
+    IFrameWidthValue > 973
+      ? "100%"
+      : IFrameWidthValue < 200
+      ? "100%"
+      : IFrameWidthValue + "px"};
+  height: ${({ IFrameHeightValue }) =>
+    IFrameHeightValue > 776
+      ? "776px"
+      : IFrameHeightValue < 150
+      ? "776px"
+      : IFrameHeightValue + "px"};
   border: none;
   outline: 0;
+  background-color: #d2d2d2;
 `;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import { customAlphabet } from "nanoid";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +33,12 @@ function Home() {
       setIsLoading(false);
     });
   };
+
+  useEffect(() => {
+    return () => {
+      setIsLoading(false);
+    };
+  }, []);
 
   return (
     <StyledContainer>

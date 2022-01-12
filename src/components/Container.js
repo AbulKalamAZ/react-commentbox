@@ -10,6 +10,7 @@ function Container() {
   const location = useLocation();
   const pageID = location.pathname.split("/")[2];
   const [comments, setComments] = useState([]);
+  const [serial, setSerial] = useState("");
   const [commentProcessing, setCommentProcessing] = useState(false);
 
   const handlePushComment = (body, id) => {
@@ -19,6 +20,7 @@ function Container() {
       .then(() => {
         utilities.readDocInCollection(id).then((res) => {
           setComments([...res.comments].reverse());
+
           setCommentProcessing(false);
         });
       })
@@ -28,6 +30,7 @@ function Container() {
   useEffect(() => {
     utilities.readDocInCollection(pageID).then((res) => {
       setComments([...res.comments].reverse());
+      if (res.serial) setSerial(res.serial);
     });
   }, [pageID]);
   return (
@@ -38,6 +41,16 @@ function Container() {
           <p>Your social network for all</p>
         </NingSpruzCard>
       </LinkToNingSpruz>
+
+      <SerialNumberCard>
+        {serial ? (
+          <p>
+            There are <span className='count'>{serial}</span> more comment{" "}
+            <br />
+            boxes that are currently active
+          </p>
+        ) : null}
+      </SerialNumberCard>
       <StyledContainer>
         <CommentInput
           handlePushComment={handlePushComment}
@@ -54,7 +67,7 @@ export default Container;
 // Styles
 
 const StyledContainer = styled.div`
-  width: 50%;
+  width: 60%;
   min-height: 100vh;
   max-height: auto;
   margin: 36px auto;
@@ -65,7 +78,7 @@ const StyledContainer = styled.div`
 const LinkToNingSpruz = styled.a``;
 
 const NingSpruzCard = styled.div`
-  width: 250px;
+  width: 220px;
   padding: 12px;
   position: fixed;
   left: 20px;
@@ -73,4 +86,16 @@ const NingSpruzCard = styled.div`
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
+`;
+
+const SerialNumberCard = styled.div`
+  position: fixed;
+  top: 150px;
+  left: 20px;
+  color: #9d5c0d;
+
+  span {
+    font-size: 24px;
+    font-weight: bold;
+  }
 `;
