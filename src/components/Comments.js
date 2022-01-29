@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import moment from "moment";
 import userAvatar from "../assets/user.png";
 
 function Comments({ comments }) {
@@ -14,14 +15,19 @@ function Comments({ comments }) {
           IFrameValue,
           IFrameWidthValue,
           IFrameHeightValue,
+          createdAt,
         }) => {
-          console.log(IFrameWidthValue, IFrameHeightValue);
           return (
             <Comment key={`${id} + ${Math.random()}`}>
               <CommentorAvatar />
 
               <CommentorContent>
-                <CommentorName>{name}</CommentorName>
+                <CommentHeader>
+                  <CommentorName>{name}</CommentorName>
+                  <CommentTime>
+                    {createdAt ? moment(createdAt).fromNow() : ""}
+                  </CommentTime>
+                </CommentHeader>
                 <CommentorComment>{comment}</CommentorComment>
 
                 {IFrameValue === "" ? null : (
@@ -76,6 +82,19 @@ const CommentorContent = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const CommentHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+`;
+
+const CommentTime = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  color: #9d5c0d;
+`;
+
 const CommentorName = styled.h4`
   position: relative;
   bottom: 0px;

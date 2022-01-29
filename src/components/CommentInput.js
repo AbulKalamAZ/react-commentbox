@@ -45,13 +45,6 @@ function CommentInput({ handlePushComment, commentProcessing }) {
     // Block browsers default behaviour
 
     e.preventDefault();
-    console.log(
-      name,
-      comment,
-      IFrameValue,
-      IFrameWidthValue,
-      IFrameHeightValue
-    );
 
     // Run this block when comment isn't empty
 
@@ -65,11 +58,19 @@ function CommentInput({ handlePushComment, commentProcessing }) {
               IFrameValue: IFrameValue,
               IFrameWidthValue: IFrameWidthValue,
               IFrameHeightValue: IFrameHeightValue,
+              createdAt: +new Date(),
             },
             docID
           )
         : handlePushComment(
-            { name, comment, IFrameValue, IFrameWidthValue, IFrameHeightValue },
+            {
+              name,
+              comment,
+              IFrameValue,
+              IFrameWidthValue,
+              IFrameHeightValue,
+              createdAt: +new Date(),
+            },
             docID
           );
 
